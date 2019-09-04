@@ -5,7 +5,9 @@
 ## Quick Start
 
 ```bash
-$ helm install stable/hazelcast
+$ helm repo add hazelcast https://hazelcast.github.io/charts/
+$ helm repo update
+$ helm install hazelcast/hazelcast
 ```
 
 ## Introduction
@@ -21,7 +23,7 @@ This chart bootstraps a [Hazelcast](https://github.com/hazelcast/hazelcast-docke
 To install the chart with the release name `my-release`:
 
 ```bash
-$ helm install --name my-release stable/hazelcast
+$ helm install --name my-release hazelcast/hazelcast
 ```
 
 The command deploys Hazelcast on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -74,6 +76,8 @@ The following table lists the configurable parameters of the Hazelcast chart and
 | `resources.limits.memory`                  | Memory resource limit                                                                                          | `default`                                            |
 | `resources.requests.cpu`                   | CPU resource requests                                                                                          | `default`                                            |
 | `resources.requests.memory`                | Memory resource requests                                                                                       | `default`                                            |
+| `service.create`                           | Enable installing Service                                                                                      | `true`                                               |
+| `service.name`                             | Name of Service, if not set, the name is generated using the fullname template                                 | `nil`                                                |
 | `service.type`                             | Kubernetes service type ('ClusterIP', 'LoadBalancer', or 'NodePort')                                           | `ClusterIP`                                          |
 | `service.port`                             | Kubernetes service port                                                                                        | `5701`                                               |
 | `rbac.create`                              | Enable installing RBAC Role authorization                                                                      | `true`                                               |
@@ -125,7 +129,7 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 ```bash
 $ helm install --name my-release \
   --set cluster.memberCount=3,hazelcast.rest=false \
-    stable/hazelcast
+    hazelcast/hazelcast
 ```
 
 The above command sets number of Hazelcast members to 3 and disables REST endpoints.
@@ -133,7 +137,7 @@ The above command sets number of Hazelcast members to 3 and disables REST endpoi
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install --name my-release -f values.yaml stable/hazelcast
+$ helm install --name my-release -f values.yaml hazelcast/hazelcast
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
